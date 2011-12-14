@@ -1,0 +1,77 @@
+<script>
+
+function taskPageLoad() {
+	var input = Object();
+	input.findAttr = "";
+	Request('get_top_level_tasks', input, getTopLevelTaskSuccess);
+}
+function getTopLevelTaskSuccess(response){
+    var myData = createTaskSectionHtml(response);
+    $('#taskList').html(myData.html);
+}
+
+function getSubTasks(id){
+	var input = Object();
+	input.taskId = id;
+	Request('get_sub_tasks', input, onGetSubTasksSuccess);
+}
+
+function onGetSubTasksSuccess(response){
+    var myData = createTaskSectionHtml(response);
+    $('#sub_'+myData.parent).html(myData.html);
+}
+
+function showHideGetSubTasks(id){
+	var formmatedId = id.replace(/\./g, "");
+	var hiddenField = $('#'+formmatedId);
+	
+	if(hiddenField != null){
+		
+	}
+}
+
+function createTaskSectionHtml(response){
+	var myData = Object();
+	var myHtml = "";
+	var parentId = ""
+    
+	for(i=0; i<response.length; i++){
+		var item = response[i];
+		parentId = item['parent_id'].replace(/\./g, "");
+
+		switch(item['task_level']){
+		case 1:
+		case 2:
+			myHtml += '<section class="cstl" id="' + item["task_id"] +'"';
+			myHtml += ' onclick="getSubTasks(id)"';
+			myHtml += '>' + item['task_id'] + ' ' + item['name'];
+			myHtml += '</section>';
+			myHtml += '<input type="hidden" id="' + parentId + '"></input>';
+			myHtml += '<div class="cstl_sub" id="sub_' + item["task_id"].replace(/\./g, "") + '"></div>';
+			break;
+		case 3:
+			myHtml += '<section class="cstl" id="' + item["task_id"] +'"';
+			myHtml += ' onclick="getSubTasks(id)"';
+			myHtml += '>' + item['task_id'] + ' ' + item['name'];
+			myHtml += '<br/><br/>'+ item['description'] +'</section>';
+			myHtml += '<div class="cstl_sub" id="sub_' + item["task_id"].replace(/\./g, "") + '"></div>';
+			break;
+		case 4:
+			myHtml += '<section class="cstl" id="' + item["task_id"] +'"';
+			myHtml += '';
+			myHtml += '>' + item['task_id'] + ' ' + item['description'];
+			myHtml += '</section>';
+			break;
+		}
+	}
+	myData.html = myHtml;
+	myData.parent = parentId.replace(/\./g, "");
+	return myData
+}
+
+</script>
+
+<h2>Tasks</h2>
+
+<div id="taskList"></div>
+

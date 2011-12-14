@@ -1,0 +1,65 @@
+<html>
+<head>
+	<title>Subtle42</title>
+	<script>
+		//Script to change javascript and css import before page loads
+		var agent = navigator.userAgent;
+		var version = navigator.appVersion;
+		
+		if(version.search("Chrome") != -1){
+			document.write('');
+		}
+		else if(agent.search("Firefox") != -1){
+			document.write('');
+		}
+	</script>
+	
+	<link rel="stylesheet" href="stylesheets/danstyle.css" type="text/css"></link>
+	<script type="text/javascript" src="javascript/jquery-1.6.4.js"></script>
+	<script type="text/javascript" src="javascript/serverPost2.js"></script>
+	<script type="text/javascript" src="javascript/util.js"></script>
+
+	<script type="text/javascript" src="javascript/resume-page.js"></script>
+	
+	<script>
+		$(document).ready(init)
+	</script>
+</head>
+
+<body>
+	<div id="pageContainer">
+		<header class="page_title">
+			<h1>Stand back, this could get awesome.</h1>
+		</header>
+		
+		<nav id="tabs" class="gtb">
+			<a id="resume" href="#resume" class="tab">Resume</a> 
+			<a id="adding" href="#adding" class="tab">Adding</a>
+			<a id="tasks" href="#tasks" class="tab">Tasks</a>
+			<a id="uploadCenter" href="#uploadCenter" class="tab">Upload</a>
+			<div class="gtbc"></div>
+		</nav>
+		
+		<section class="page-content" id="tasks-page">
+			{% include "pages/tasks.html" %}
+		</section>
+		<section class="page-content" id="resume-page">
+			{% include "pages/resume.html" %}
+		</section>
+		<section class="page-content" id="adding-page">		
+			{% include "pages/adding.html"%}
+		</section>
+		<section class="page-content" id="loading-page">
+			{% include "pages/loading.html" %}
+		</section>
+		<section class="page-content" id="uploadCenter-page">
+			{% include "pages/upload_center.html" %}
+		</section>
+	</div>
+	
+	<footer>
+		{% include "pages/footer.html" %}
+	</footer>
+</body>
+
+</html>

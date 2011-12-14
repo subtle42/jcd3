@@ -1,0 +1,30 @@
+<script>
+	function uploadStates(){
+		var input = new Object();
+		Request('state_upload', input, onUploadStatesSuccess);
+	}
+	
+	function onUploadStatesSuccess(response){
+		populateSelectList(response, "ddl_stateListOpt");	
+	}
+
+	function uploadTasks(){
+		var input = new Object();
+		input.to_upload = 'tasks';
+		Request('task_upload', input, onUploadTasksSuccess);
+	}
+
+	function onUploadTasksSuccess(response){
+		alert('Success');
+	}
+</script>
+
+
+<h2>Upload Center</h2>
+<br/>
+Upload States <button onclick="uploadStates();">Go!</button>
+<select id="ddl_stateList">
+	<optgroup id="ddl_stateListOpt" label="States"></optgroup>
+</select>
+
+<br/>Upload Tasks <button onclick="uploadTasks();">Go!</button>
