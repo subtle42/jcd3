@@ -1,10 +1,16 @@
 <script>
 
 function taskPageLoad() {
-	var input = Object();
-	input.findAttr = "";
-	Request('get_top_level_tasks', input, getTopLevelTaskSuccess);
+	var pageLoad = $('#topLevelTasks');
+	var myValue = pageLoad.val();
+	if(myValue == "False"){
+		pageLoad.value = 'True';
+		var input = Object();
+		input.findAttr = "";
+		Request('get_top_level_tasks', input, getTopLevelTaskSuccess);
+	}
 }
+
 function getTopLevelTaskSuccess(response){
     var myData = createTaskSectionHtml(response);
     $('#taskList').html(myData.html);
@@ -22,11 +28,23 @@ function onGetSubTasksSuccess(response){
 }
 
 function showHideGetSubTasks(id){
-	var formmatedId = id.replace(/\./g, "");
-	var hiddenField = $('#'+formmatedId);
-	
-	if(hiddenField != null){
-		
+	var formattedId = id.replace(/\./g, "");
+	var hiddenField = $('#hid_'+formattedId);
+
+	//Check is the hidden field exists
+	if(hiddenField.length != 0){
+		var currentField = $('#sub_'+formattedId);
+		//Runs if field is not visible
+		if(currentField.is(':visible')){
+			currentField.hide();
+		}
+		//Runs if field is visible
+		else{
+			currentField.show();
+		}
+	}
+	else{
+		getSubTasks(id);
 	}
 }
 
@@ -43,17 +61,18 @@ function createTaskSectionHtml(response){
 		case 1:
 		case 2:
 			myHtml += '<section class="cstl" id="' + item["task_id"] +'"';
-			myHtml += ' onclick="getSubTasks(id)"';
+			myHtml += ' onclick="showHideGetSubTasks(id)"';
 			myHtml += '>' + item['task_id'] + ' ' + item['name'];
 			myHtml += '</section>';
-			myHtml += '<input type="hidden" id="' + parentId + '"></input>';
+			myHtml += '<input type="hidden" id="hid_' + parentId + '"></input>';
 			myHtml += '<div class="cstl_sub" id="sub_' + item["task_id"].replace(/\./g, "") + '"></div>';
 			break;
 		case 3:
 			myHtml += '<section class="cstl" id="' + item["task_id"] +'"';
-			myHtml += ' onclick="getSubTasks(id)"';
+			myHtml += ' onclick="showHideGetSubTasks(id)"';
 			myHtml += '>' + item['task_id'] + ' ' + item['name'];
 			myHtml += '<br/><br/>'+ item['description'] +'</section>';
+			myHtml += '<input type="hidden" id="hid_' + parentId + '"></input>';
 			myHtml += '<div class="cstl_sub" id="sub_' + item["task_id"].replace(/\./g, "") + '"></div>';
 			break;
 		case 4:
@@ -61,6 +80,7 @@ function createTaskSectionHtml(response){
 			myHtml += '';
 			myHtml += '>' + item['task_id'] + ' ' + item['description'];
 			myHtml += '</section>';
+			myHtml += '<input type="hidden" id="hid_' + parentId + '"></input>';
 			break;
 		}
 	}
@@ -73,5 +93,7 @@ function createTaskSectionHtml(response){
 
 <h2>Tasks</h2>
 
-<div id="taskList"></div>
+<div id="taskList">
+<input type="hidden" id="topLevelTasks" value="False"></input>
+</div>
 
