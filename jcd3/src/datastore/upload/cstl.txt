@@ -1,0 +1,13 @@
+id;name;description;parent;level
+1.0;Transportation;;;1
+1.1;Ground Transportation;;1.0;2
+1.1.1;Ground Transportation of Personnel;Provide ground transportation of personnel. This capability Includes planning, coordinating, and supervising movement from a single point in a single movement, tracking and reporting on personnel moved, and securing additional supplies and support such as maintenance and fuel. It may also include safety escorts. This capability does not include medical evacuation of injured, medical, and non-ambulatory patients.;1.1;3
+1.1.1.1;;Move 400 personnel. Up to 1 Hr to load, 35 MPH transit speed.;1.1.1;4
+1.1.1.2;;Move 200 personnel. 30 min to load, 35 MPH transit speed.;1.1.1;4
+1.1.1.3;;Move 100 personnel. Up to 20 min to load, 35 MPH transit speed.;1.1.1;4
+1.1.1.4;;Move 40 personnel. Up to 10 min to load, 35 MPH transit speed.;1.1.1;4
+1.1.2;Ground Transportation of Palletized Materials;Provide transportation of palletized materials. This capability includes planning, coordinating, and supervising movement from a single point in a single movement over improved, semi-improved, or unimproved roads and highways, tracking and reporting on materials moved, and securing additional supplies and support such as maintenance and fuel.;1.1;3
+1.1.2.1;;Move 480 Pallets per lift. 35 MPH transit speed.;1.1.2;4
+1.1.2.2;;Move 320 Pallets per lift. 35 MPH transit speed.;1.1.2;4
+1.1.2.3;;Move 180 Pallets per lift. 35 MPH transit speed.;1.1.2;4
+1.1.2.4;;Move 80 Pallets per lift. 35 MPH transit speed.;1.1.2;4
