@@ -155,3 +155,15 @@ function resumeShowHide(event){
 		$('#'+obj_id).hide('slow');
 	}
 }
+
+function doAdd(){
+	var input = new Object();
+	input.num1 = $('#num1').val();
+	input.num2 = $('#num2').val();	
+
+	Request('Add', input, onAddSuccess);
+}
+
+function onAddSuccess(response){
+	$('#result').val(response);
+}
