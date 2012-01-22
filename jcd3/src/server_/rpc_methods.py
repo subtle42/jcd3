@@ -1,7 +1,8 @@
 from server_.methods import addTest
 from server_.methods import myxml_
 from server_.methods import upload
-from server_.methods import tasks
+from server_.methods.tasks import TaskMethods
+from server_.methods.states import StateMethods
 
 class RPCMethods:
     """ Defines the methods that can be RPCed.
@@ -25,9 +26,13 @@ class RPCMethods:
         return asdf.run()
     
     def get_top_level_tasks(self, request):
-        asdf = tasks.GetTopLevelTasks()
-        return asdf.run()
+        asdf = TaskMethods()
+        return asdf.get_top_level_tasks()
     
     def get_sub_tasks(self, request):
-        asdf = tasks.GetSubTasks()
-        return asdf.run(request)
+        asdf = TaskMethods()
+        return asdf.get_sub_tasks(request)
+    
+    def get_all_states(self, request):
+        asdf = StateMethods()
+        return asdf.get_all_states()

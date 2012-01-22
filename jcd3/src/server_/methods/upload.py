@@ -4,9 +4,9 @@ import fileinput
 from google.appengine.ext import db
 
 from datastore.google.task import Task
-from server_.methods.tasks import GetAllTasks
+from server_.methods.tasks import TaskMethods
 from datastore.google.state import State
-from server_.methods.states import StatesMethod
+from server_.methods.states import StateMethods
 
 class Upload():
     def _format_lines(self, my_file):
@@ -46,8 +46,8 @@ class TaskUpload(Upload):
             import_list.append(my_task)
             
         db.put(import_list)
-        my_q = GetAllTasks()
-        asdf = my_q.run()
+        my_q = TaskMethods()
+        asdf = my_q.get_all_tasks()
         return asdf
         
 class StateUpload(Upload):
@@ -66,6 +66,6 @@ class StateUpload(Upload):
         #Commented out just in case of accidents
         db.put(import_list)
         
-        new_states = StatesMethod()
+        new_states = StateMethods()
         return new_states.get_all_states()
         

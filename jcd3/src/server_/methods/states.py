@@ -3,7 +3,7 @@ from django.utils import simplejson as json
 from datastore.google.state import State
 
 
-class StatesMethod:
+class StateMethods:
     def get_all_states(self):
         myStates = State()
         state_list = myStates.get_states()

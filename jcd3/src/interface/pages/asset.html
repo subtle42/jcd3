@@ -1,2 +1,73 @@
+<script>
+
+function pageLoadAssets(){
+	var input = new Object();
+	if($("#assetPageLoaded").val() == "false"){
+		$("#commentForm").validate();
+		$("#createNewAssetForm").validate();
+		
+		$("#assetPageLoaded").val("true");
+		Request("get_all_states", input, onGetAllStatesSuccess);		
+	}
+}
+
+function onGetAllStatesSuccess(response){
+	populateSelectList(response, "ddl_createNewAsset_states");
+}
+
+function showHideCreateNewAssetForm(event){
+	event.preventDefault();
+	var visible = $("#createNewAssetForm").is(":visible");
+	
+	if(visible){
+		$("#link_createNewAsset").text("Create New Asset");
+		$("#createNewAssetForm").hide();
+		$("#mainAssetDiv").show();
+	}
+	else{
+		$("#link_createNewAsset").text("Back");
+		$("#mainAssetDiv").hide();
+		$("#createNewAssetForm").show();
+	}
+}
+
+function saveNewAsset(event){
+	event.preventDefault();
+	if($("#createNewAssetForm").valid()){
+		var input = Object();
+		input.assetName = $("#assetName").val();
+		input.state = $("#ddl_createNewAsset_states option:selected").val();
+		input.desc = $("#assetDesc").val();
+		Request("", input, onSaveNewAssetSuccess);
+	}
+}
+
+function onSaveNewAssetSuccess(){
+	alert("Save Successful");
+	showHideCreateNewAssetForm("");
+}
+
+</script>
+
+
 <h2>Asset Page</h2>
+<input type="hidden" id="assetPageLoaded" value="false" />
+
+<a href="#" id="link_createNewAsset" onclick="showHideCreateNewAssetForm(event)">Create New Asset</a>
+
+<div id="mainAssetDiv">
+	Main asset area
+</div>
+
+<form id="createNewAssetForm" style="display:none">
+	Asset Name *
+	<input id="assetName" name="name" size="25" class="required" minlength="5" />
+	<br/>State *  
+	<select class="required" id="ddl_createNewAsset_states">
+	</select>
+	<br/>Description *
+	<textarea id="assetDesc" name="comment" cols="22"  class="required" minlength="8"></textarea>
+	<br/><input class="submit" type="submit" value="Save" onclick="saveNewAsset(event)"/>
+	<input type="button" value="Cancel" onclick="showHideCreateNewAssetForm(event)"></input>
+</form>
 

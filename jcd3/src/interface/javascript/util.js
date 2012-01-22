@@ -60,6 +60,9 @@ function mainSwitch(myTarget) {
     case 'tasks':
     	taskPageLoad();
     	break;
+    case "assets":
+    	pageLoadAssets();
+    	break;
     default:
     	break;
     }
@@ -101,9 +104,9 @@ function oneTimePageLoadEvents(){
 	$('.resume-bar').click(resumeShowHide);
 }
 
+//Must be list of SINGLE key value pairs
+//Ex:  [{key1:val1},{key2:val2},{key3:val3}]
 function populateSelectList(jsonList, selectListId){
-	//Must be list of SINGLE key value pairs
-	//Ex:  [{key1:val1},{key2:val2},{key3:val3}]
 	for(var i in jsonList){
 		var myObject = jsonList[i];
 		for(var key in myObject){
@@ -111,5 +114,39 @@ function populateSelectList(jsonList, selectListId){
 			$(myOption).html(myObject[key]);
 			$("#"+selectListId).append(myOption);
 		}
+	}
+}
+
+//Used for creating html tags
+//elementType: input, p, select, etc
+//newObj" should be a dictionary of items to be put inside the tag
+function createHtmlElement(elementType, tagAttr, innerText){
+	var htmlString = "";
+	htmlString += "<" + elementType;
+	
+	for(item in tagAttr){
+		htmlString += " " + item + "=" + tagAttr[item];
+	}
+	htmlString += ">" + innerText + "</" + elementType + ">";
+	return htmlString;
+}
+
+//TODO: currently not working
+function getShowHide(searchId, getFunction, params){
+	var lookupObj = $("#" + searchId);
+	
+	//Check if field exists
+	if(lookupObj.length != 0){
+		//Runs if field is not visible
+		if(!lookupObj.is(':visible')){
+			lookupObj.hide();
+		}
+		//Runs if field is visible
+		else{
+			lookupObj.show();
+		}
+	}
+	else{
+		getFunction(params);
 	}
 }
