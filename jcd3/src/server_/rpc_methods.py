@@ -3,11 +3,20 @@ from server_.methods import myxml_
 from server_.methods import upload
 from server_.methods.tasks import TaskMethods
 from server_.methods.states import StateMethods
+from server_.methods.assets import AssetMethods
 
 class RPCMethods:
     """ Defines the methods that can be RPCed.
     NOTE: Do not allow remote callers access to private/protected "_*" methods.
     """
+    
+    def get_all_assets(self, request):
+        asdf = AssetMethods()
+        return asdf.get_all_assets(request)
+
+    def save_asset(self, request):
+        asdf = AssetMethods()
+        return asdf.save_asset(request)
 
     def Add(self, request):
         asdf = addTest.MyClass();

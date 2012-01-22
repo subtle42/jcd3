@@ -2,6 +2,8 @@
 
 function pageLoadAssets(){
 	var input = new Object();
+	Request("get_all_assets", input, onGetAllAssetsSuccess);
+	
 	if($("#assetPageLoaded").val() == "false"){
 		$("#commentForm").validate();
 		$("#createNewAssetForm").validate();
@@ -9,6 +11,17 @@ function pageLoadAssets(){
 		$("#assetPageLoaded").val("true");
 		Request("get_all_states", input, onGetAllStatesSuccess);		
 	}
+}
+
+function onGetAllAssetsSuccess(response){
+	var myHtml = "";
+	
+	for(var i in response){
+		var item = response[i];
+		myHtml += item["name"] + "<br/>";
+	}
+	
+	$("#mainAssetDiv").html(myHtml);
 }
 
 function onGetAllStatesSuccess(response){
@@ -38,13 +51,13 @@ function saveNewAsset(event){
 		input.assetName = $("#assetName").val();
 		input.state = $("#ddl_createNewAsset_states option:selected").val();
 		input.desc = $("#assetDesc").val();
-		Request("", input, onSaveNewAssetSuccess);
+		Request("save_asset", input, onSaveNewAssetSuccess);
 	}
 }
 
 function onSaveNewAssetSuccess(){
 	alert("Save Successful");
-	showHideCreateNewAssetForm("");
+	clearForm("createNewAssetForm");
 }
 
 </script>

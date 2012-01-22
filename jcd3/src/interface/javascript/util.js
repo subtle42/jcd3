@@ -131,6 +131,15 @@ function createHtmlElement(elementType, tagAttr, innerText){
 	return htmlString;
 }
 
+//pass the id of a form to clear all fields
+function clearForm(formId){
+	$(":input","#"+formId)
+	 .not(":button, :submit, :reset, :hidden")
+	 .val("")
+	 .removeAttr("checked")
+	 .removeAttr("selected");
+}
+
 //TODO: currently not working
 function getShowHide(searchId, getFunction, params){
 	var lookupObj = $("#" + searchId);
