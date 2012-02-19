@@ -5,23 +5,24 @@ function pageLoadAssets(){
 	Request("get_all_assets", input, onGetAllAssetsSuccess);
 	
 	if($("#assetPageLoaded").val() == "false"){
+		$("#myTable").tablesorter();
 		$("#commentForm").validate();
 		$("#createNewAssetForm").validate();
 		
 		$("#assetPageLoaded").val("true");
-		Request("get_all_states", input, onGetAllStatesSuccess);		
+		Request("get_all_states", input, onGetAllStatesSuccess);
 	}
 }
 
 function onGetAllAssetsSuccess(response){
 	var myHtml = "";
+	$("#myTable").find("tbody").empty();
 	
 	for(var i in response){
 		var item = response[i];
-		myHtml += item["name"] + "<br/>";
+		var myList = [item["name"], item["state_id"], item["desc"]];
+		utilAddRow("myTable", myList);
 	}
-	
-	$("#mainAssetDiv").html(myHtml);
 }
 
 function onGetAllStatesSuccess(response){
@@ -58,6 +59,9 @@ function saveNewAsset(event){
 function onSaveNewAssetSuccess(){
 	alert("Save Successful");
 	clearForm("createNewAssetForm");
+	
+	var input = new Object();
+	Request("get_all_assets", input, onGetAllAssetsSuccess);
 }
 
 </script>
@@ -69,7 +73,17 @@ function onSaveNewAssetSuccess(){
 <a href="#" id="link_createNewAsset" onclick="showHideCreateNewAssetForm(event)">Create New Asset</a>
 
 <div id="mainAssetDiv">
-	Main asset area
+	<table id="myTable" class="tablesorter">
+		<thead>
+		<tr>
+			<th>Asset Name</th>
+			<th>State</th>
+			<th>Description</th>
+		</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
 </div>
 
 <form id="createNewAssetForm" style="display:none">

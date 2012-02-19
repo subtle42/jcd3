@@ -159,3 +159,13 @@ function getShowHide(searchId, getFunction, params){
 		getFunction(params);
 	}
 }
+
+function utilAddRow(tableId, rowInListForm){
+	var myHtml = "";
+	for(var i in rowInListForm){
+		myHtml += createHtmlElement("td", null, rowInListForm[i]);
+	}
+	myHtml = createHtmlElement("tr", null, myHtml);
+	$("#"+tableId+" tbody:last").append(myHtml);
+	$("#myTable").trigger("update");
+}
